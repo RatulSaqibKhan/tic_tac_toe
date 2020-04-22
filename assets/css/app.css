@@ -74,6 +74,7 @@ body {
 
     .game-initials,
     .game-initials-second-part,
+    .game-decision-container,
     .game-board {
         width: 70vw;
         height: 70vh;
@@ -84,6 +85,7 @@ body {
 
     .game-initials,
     .game-initials-second-part,
+    .game-decision-container,
     .game-board {
         width: 59vw;
         height: 70vh;
@@ -91,7 +93,8 @@ body {
 }
 
 .game-initials,
-.game-initials-second-part {
+.game-initials-second-part,
+.game-decision-container {
     background-color: rgb(16, 4, 37);
     border-radius: 30px;
     display: flex;
@@ -231,6 +234,17 @@ body {
     width: 41px;
     height: 41px;
     background-color: rgb(16, 4, 37);
+}
+
+.message-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message-container h1 {
+    color: white;
+    letter-spacing: 8px;
 }
 
 .footer {
