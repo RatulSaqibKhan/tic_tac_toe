@@ -79,6 +79,7 @@ const TicTacToe = {
         let gameInitialSectionDom = this._createGameInitialSection()
         document.querySelector('.dynamic-content').appendChild(gameInitialSectionDom)
         this.allButtonPressAnimation()
+        this._setBackgroundAudio()
     },
 
     _createGameInitialSection() {
@@ -193,7 +194,12 @@ const TicTacToe = {
                         this.properties.playerTwo = "circle"
                         this.properties.computerPlayer = this.properties.gamingMode === 'single_player' ? "circle" : null
                         this.properties.activePlayer = this.properties.playerOne
-                        alert(`Player One: X & Player Two: O`)
+                        // Set Notification Dom element
+                        this._createNotificationDom(`Player One: X & Player Two: O`)
+                        setTimeout(() => {
+                            // Remove Notification DOM
+                            this._removeNotificationDom()
+                        }, 2000)
                         this._removeGameInitialSecondPartFromDom()
                         this._createDomForGameBoard()
                         break;
@@ -202,7 +208,12 @@ const TicTacToe = {
                         this.properties.playerTwo = "x"
                         this.properties.computerPlayer = this.properties.gamingMode === 'single_player' ? "x" : null
                         this.properties.activePlayer = this.properties.playerOne
-                        alert(`Player One: O & Player Two: X`)
+                        // Set Notification Dom element
+                        this._createNotificationDom(`Player One: O & Player Two: X`)
+                        setTimeout(() => {
+                            // Remove Notification DOM
+                            this._removeNotificationDom()
+                        }, 2000)
                         this._removeGameInitialSecondPartFromDom()
                         this._createDomForGameBoard()
                         break;
@@ -305,12 +316,8 @@ const TicTacToe = {
         this.properties.activePlayer = this.properties.activePlayer === this.properties.playerOne ? this.properties.playerTwo : this.properties.playerOne
         gameBoardDom.classList.add(this.properties.activePlayer)
         if (this.properties.gamingMode === 'single_player' && this.properties.computerPlayer === this.properties.activePlayer) {
-            // Set computer playing Dom element
-            //this._createComputerPlayingDom()
             // Place mark
             this._placeMarkForComputer()
-            // Remove Computer Playing DOM
-            //this._removeComputerPlayingDom()
 
             if (this._checkForWin()) {
                 // Check For Win
@@ -357,20 +364,20 @@ const TicTacToe = {
         return cells[Math.floor(Math.random() * cells.length)]
     },
 
-    _createComputerPlayingDom() {
-        let computerPlayingDom = document.createElement("div")
+    _createNotificationDom(message) {
+        let notificationDom = document.createElement("div")
         let innerElement = document.createElement("h1")
 
-        innerElement.innerText = "Computer is Playing..."
-        computerPlayingDom.classList.add("computer-playing")
-        computerPlayingDom.appendChild(innerElement)
+        innerElement.innerText = message
+        notificationDom.classList.add("notification")
+        notificationDom.appendChild(innerElement)
 
-        document.body.appendChild(computerPlayingDom)
+        document.body.appendChild(notificationDom)
 
     },
 
-    _removeComputerPlayingDom() {
-        document.querySelector('.computer-playing').remove()
+    _removeNotificationDom() {
+        document.querySelector('.notification').remove()
     },
 
     _endGame() {
@@ -387,6 +394,7 @@ const TicTacToe = {
     _setGameDecisionDom() {
         let gameDecisionDom = this._createGameDecisionDom()
         document.querySelector('.dynamic-content').appendChild(gameDecisionDom)
+        this.allButtonPressAnimation()
     },
 
     _createGameDecisionDom() {
@@ -445,13 +453,62 @@ const TicTacToe = {
         var buttons = document.querySelectorAll('.button')
 
         buttons.forEach(buttonElement => {
+            var audio = new Audio()
+            buttonElement.setAttribute('disabled', true)
+            audio.addEventListener("loadeddata", this.enableAudioButton.bind(buttonElement), true);
+
+            audio.src = 'assets/extra/audios/click.mp3'
+
             buttonElement.addEventListener("mousedown", () => {
                 buttonElement.classList.add('active')
+
+                audio.currentTime = 0
+                audio.play()
             })
             buttonElement.addEventListener("mouseup", () => {
                 buttonElement.classList.remove('active')
             })
         })
+
+    },
+
+    _setBackgroundAudio() {
+        var backgroundAudio = new Audio()
+        var volumeElement = document.getElementById("volumeButton")
+        var volumeIcon = document.querySelector("#volumeButton > i")
+
+        backgroundAudio.addEventListener("loadeddata", this.enableAudioButton.bind(volumeElement), true);
+        backgroundAudio.src = 'assets/extra/audios/happy_background.mp3'
+        backgroundAudio.loop = true
+        
+        volumeElement.addEventListener("click", () => {
+            if (backgroundAudio.paused) {
+                backgroundAudio.currentTime = 0
+                backgroundAudio.play()
+                volumeIcon.innerText = "volume_off"
+            } else {
+                backgroundAudio.pause();
+                volumeIcon.innerText = "volume_up"
+            }
+        })
+
+        volumeElement.addEventListener("mousedown", () => {
+            volumeElement.classList.add("active")
+        })
+
+        volumeElement.addEventListener("mouseup", () => {
+            volumeElement.classList.remove("active")
+        })
+
+        backgroundAudio.addEventListener("ended", () => {
+            backgroundAudio.currentTime = 0
+            backgroundAudio.play()
+        }, false)
+
+    },
+
+    enableAudioButton() {
+        this.removeAttribute("disabled"); //reenable the button
     }
 }
 
