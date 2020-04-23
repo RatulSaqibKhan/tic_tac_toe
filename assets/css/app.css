@@ -247,6 +247,20 @@ body {
     letter-spacing: 8px;
 }
 
+.computer-playing {
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    background: rgba(0,0,0,0.9);
+    color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .footer {
     position: fixed;
     width: 100%;
