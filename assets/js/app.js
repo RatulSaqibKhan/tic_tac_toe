@@ -349,8 +349,12 @@ const TicTacToe = {
     },
 
     _getBestPositionForPlacingMark(emptyCells) {
-        let bestMove = emptyCells[0]
+        let bestMove = this._simpleAi(emptyCells)
         return bestMove;
+    },
+
+    _simpleAi(cells) {
+        return cells[0]
     },
 
     _createComputerPlayingDom() {
