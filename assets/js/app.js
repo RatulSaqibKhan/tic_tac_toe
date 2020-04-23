@@ -480,24 +480,20 @@ const TicTacToe = {
         backgroundAudio.addEventListener("loadeddata", this.enableAudioButton.bind(volumeElement), true);
         backgroundAudio.src = 'assets/extra/audios/happy_background.mp3'
         backgroundAudio.loop = true
-        
+
         volumeElement.addEventListener("click", () => {
+            volumeElement.classList.remove("fade");
             if (backgroundAudio.paused) {
                 backgroundAudio.currentTime = 0
                 backgroundAudio.play()
                 volumeIcon.innerText = "volume_off"
+                volumeElement.classList.add("fade");
             } else {
                 backgroundAudio.pause();
                 volumeIcon.innerText = "volume_up"
+                volumeElement.classList.remove("fade");
             }
-        })
 
-        volumeElement.addEventListener("mousedown", () => {
-            volumeElement.classList.add("active")
-        })
-
-        volumeElement.addEventListener("mouseup", () => {
-            volumeElement.classList.remove("active")
         })
 
         backgroundAudio.addEventListener("ended", () => {
