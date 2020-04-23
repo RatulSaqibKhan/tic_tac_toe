@@ -335,7 +335,7 @@ const TicTacToe = {
         let cellElements = document.querySelectorAll('[data-cell]')
         let emptyCells = []
         cellElements.forEach((element, index) => {
-            if (!element.classList.contains(otherPlayer) && !element.classList.contains(this.properties.activePlayer)) {
+            if (!element.classList.contains(this.properties.playerOne) && !element.classList.contains(this.properties.activePlayer)) {
                 emptyCells.push(index)
             }
         })
@@ -354,7 +354,7 @@ const TicTacToe = {
     },
 
     _simpleAi(cells) {
-        return cells[0]
+        return cells[Math.floor(Math.random() * cells.length)]
     },
 
     _createComputerPlayingDom() {
