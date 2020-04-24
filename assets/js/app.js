@@ -487,7 +487,8 @@ const TicTacToe = {
 
         backgroundAudio.addEventListener("loadeddata", this.enableAudioButton.bind(volumeElement), true);
         backgroundAudio.src = 'assets/extra/audios/music_box_melody.mp3'
-        
+        backgroundAudio.loop = true
+
         volumeElement.addEventListener("click", () => {
             volumeElement.classList.remove("fade");
             if (backgroundAudio.paused) {
@@ -503,11 +504,6 @@ const TicTacToe = {
             }
 
         })
-
-        backgroundAudio.addEventListener("ended", () => {
-            backgroundAudio.currentTime = 0
-            backgroundAudio.play()
-        }, false)
 
     },
 
