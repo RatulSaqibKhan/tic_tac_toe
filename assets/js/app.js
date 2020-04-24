@@ -259,7 +259,15 @@ const TicTacToe = {
 
             cellDom.setAttribute("data-cell", i)
 
+            var cellAaudio = new Audio()
+            cellDom.setAttribute('disabled', true)
+            cellAaudio.addEventListener("loadeddata", this.enableAudioButton.bind(cellDom), true);
+
+            cellAaudio.src = 'assets/extra/audios/click.mp3'
+
             cellDom.addEventListener("click", (event) => {
+                cellAaudio.currentTime = 0
+                cellAaudio.play()
                 // Place Mark
                 cellDom.classList.add(this.properties.activePlayer)
                 if (this.properties.playerOne === this.properties.activePlayer) {
@@ -478,13 +486,13 @@ const TicTacToe = {
         var volumeIcon = document.querySelector("#volumeButton > i")
 
         backgroundAudio.addEventListener("loadeddata", this.enableAudioButton.bind(volumeElement), true);
-        backgroundAudio.src = 'assets/extra/audios/happy_background.mp3'
-        backgroundAudio.loop = true
-
+        backgroundAudio.src = 'assets/extra/audios/music_box_melody.mp3'
+        
         volumeElement.addEventListener("click", () => {
             volumeElement.classList.remove("fade");
             if (backgroundAudio.paused) {
                 backgroundAudio.currentTime = 0
+                backgroundAudio.volume = 0.2;
                 backgroundAudio.play()
                 volumeIcon.innerText = "volume_off"
                 volumeElement.classList.add("fade");
